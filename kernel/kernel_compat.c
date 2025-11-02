@@ -123,12 +123,12 @@ void ksu_seccomp_clear_cache(struct seccomp_filter *filter, int nr)
         return;
     }
 
-    if (nr >= 0 && nr < SECCOMP_ARCH_NATIVE_NR) {
+    if (nr >= 0 && nr < NR_syscalls) {
         clear_bit(nr, filter->cache.allow_native);
     }
 
 #ifdef SECCOMP_ARCH_COMPAT
-    if (nr >= 0 && nr < SECCOMP_ARCH_COMPAT_NR) {
+    if (nr >= 0 && nr < NR_syscalls) {
         clear_bit(nr, filter->cache.allow_compat);
     }
 #endif
