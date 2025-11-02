@@ -524,7 +524,7 @@ static bool add_filename_trans(struct policydb *db, const char *s,
         return false;
     }
 
-    struct filename_trans_key key;
+    struct filename_trans key;
     key.ttype = tgt->value;
     key.tclass = cls->value;
     key.name = (char *)o;
@@ -548,8 +548,8 @@ static bool add_filename_trans(struct policydb *db, const char *s,
     if (trans == NULL) {
         trans = (struct filename_trans_datum *)kcalloc(1 ,sizeof(*trans),
                                    GFP_ATOMIC);
-        struct filename_trans_key *new_key =
-            (struct filename_trans_key *)kmalloc(sizeof(*new_key),
+        struct filename_trans *new_key =
+            (struct filename_trans *)kmalloc(sizeof(*new_key),
                                  GFP_ATOMIC);
         *new_key = key;
         new_key->name = kstrdup(key.name, GFP_ATOMIC);
