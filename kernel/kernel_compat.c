@@ -96,9 +96,9 @@ long ksu_strncpy_from_user_nofault(char *dst, const void __user *unsafe_addr,
 }
 
 struct action_cache {
-    DECLARE_BITMAP(allow_native, SECCOMP_ARCH_NATIVE_NR);
+    DECLARE_BITMAP(allow_native, NR_syscalls);
 #ifdef SECCOMP_ARCH_COMPAT
-    DECLARE_BITMAP(allow_compat, SECCOMP_ARCH_COMPAT_NR);
+    DECLARE_BITMAP(allow_compat, NR_syscalls);
 #endif
 };
 
@@ -140,12 +140,12 @@ void ksu_seccomp_allow_cache(struct seccomp_filter *filter, int nr)
         return;
     }
 
-    if (nr >= 0 && nr < SECCOMP_ARCH_NATIVE_NR) {
+    if (nr >= 0 && nr < NR_syscalls) {
         set_bit(nr, filter->cache.allow_native);
     }
 
 #ifdef SECCOMP_ARCH_COMPAT
-    if (nr >= 0 && nr < SECCOMP_ARCH_COMPAT_NR) {
+    if (nr >= 0 && nr < NR_syscalls) {
         set_bit(nr, filter->cache.allow_compat);
     }
 #endif
