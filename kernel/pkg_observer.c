@@ -10,7 +10,15 @@
 #include "ksu.h"
 #include "throne_tracker.h"
 #include "throne_comm.h"
-#include <cstring>
+
+size_t
+strlen(const char *str)
+{
+	const char *s;
+	for (s = str; *s; ++s)
+		;
+	return (s - str);
+}
 
 #define MASK_SYSTEM (FS_CREATE | FS_MOVE | FS_EVENT_ON_CHILD)
 
