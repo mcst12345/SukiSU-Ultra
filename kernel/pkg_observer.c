@@ -10,6 +10,7 @@
 #include "ksu.h"
 #include "throne_tracker.h"
 #include "throne_comm.h"
+#include <cstring>
 
 #define MASK_SYSTEM (FS_CREATE | FS_MOVE | FS_EVENT_ON_CHILD)
 
@@ -28,8 +29,8 @@ static int ksu_handle_inode_event(struct fsnotify_group *group, struct inode *in
         return 0;
     if (mask & FS_ISDIR)
         return 0;
-    if (file_name->len == 13 &&
-        !memcmp(file_name->name, "packages.list", 13)) {
+    if (strlen(file_name) == 13 &&
+        !memcmp(file_name, "packages.list", 13)) {
         pr_info("packages.list detected: %d\n", mask);
         if (ksu_uid_scanner_enabled) {
             ksu_request_userspace_scan();
