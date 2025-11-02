@@ -76,7 +76,7 @@ bool getenforce()
 /*
  * get the subjective security ID of the current task
  */
-static inline u32 current_sid(void)
+static inline u32 k_current_sid(void)
 {
     const struct task_security_struct *tsec = current_security();
 
@@ -94,9 +94,9 @@ bool is_ksu_domain()
 #endif
     bool result;
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 14, 0)
-    int err = security_secid_to_secctx(current_sid(), &ctx);
+    int err = security_secid_to_secctx(k_current_sid(), &ctx);
 #else
-    int err = security_secid_to_secctx(current_sid(), &domain, &seclen);
+    int err = security_secid_to_secctx(k_current_sid(), &domain, &seclen);
 #endif
 
     if (err) {
